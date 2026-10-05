@@ -1,0 +1,50 @@
+.Navbar {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.333);
+  display: grid;
+  grid-template-columns: 250px auto 250px;
+  align-items: center;
+  padding: 0px 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  
+}
+
+/*.logo-container {
+  justify-self: start;
+}*/
+
+/*.logo-container img {
+  height: 90px;
+  width: auto;
+}*/
+
+.Navbar ul {
+  display: flex;
+  gap: 150px;
+  font-size: 1.9rem;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.Navbar li a {
+  display: inline-block;
+  transform: 0.3s ease;
+}
+
+.Navbar li a:hover {
+  transform: scale(1.10);
+}
+
+.Navbar .active {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 3px;
+}

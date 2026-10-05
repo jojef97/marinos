@@ -1,0 +1,26 @@
+footer {
+    display: flex;
+    align-items: center;
+    padding: 2px 10px;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.footer-empty {
+    flex: 1;
+}
+
+.footer-center {
+  flex: 1;
+  display: flex; 
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-center span {      /* Fixes the icons on mobile*/
+  white-space: nowrap;
+}
+
+
+
+
