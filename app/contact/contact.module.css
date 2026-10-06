@@ -1,0 +1,103 @@
+.page {
+  flex: 1;
+  padding: 120px 32px 32px;
+
+  background-image: url('/room2.jpg'); /* Put your image in /public folder */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+
+
+
+.form {
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 500px;
+  max-width:500px;
+  background-color: rgba(52, 50, 45, 0.799);
+  border-radius: 20px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding:20px;
+  
+
+
+}
+
+.form input,
+.form textarea {
+  padding: 10px;
+  border: 1px solid #88888833;
+  background-color: #ffffffd3;
+  color: black;
+  border-radius: 20px;
+  
+}
+
+.form button {
+  padding: 12px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.form button:hover {
+  background-color: rgba(70, 68, 62, 0.9);
+}
+
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+
+.contactIcons {
+  display: flex;
+  flex-direction: row;      
+  justify-content: center;   
+  gap: 12px;                
+  margin-top: 16px;         
+  width: 100%;
+  max-width: 500px;         
+  margin-left: auto;        
+  margin-right: auto;
+  position: relative;      
+  top: -60px;               /* Match top offset if used on .form */
+  left: -40px;              /* Match left offset if used on .form */
+}
+
+.contactIcons {
+  display: flex;
+  gap: 10px;
+  max-width: 500px;
+  margin: 12px auto 0;
+  position: relative;
+  top: 20px;
+  left: 0px;
+}
+
+.iconBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: rgba(52, 50, 45, 0.933);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.iconBox:hover {
+  background-color: rgba(70, 68, 62, 0.9);
+}
