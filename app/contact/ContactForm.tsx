@@ -19,8 +19,8 @@ export default function ContactForm() {
 
     {/* Honeypot */}
     <div className={styles.hp} aria-hidden="true">                                               
-        <label htmlFor="website">Website</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="hp_field">Website</label>
+        <input id="hp_field" name="hp_field" type="text" tabIndex={-1} autoComplete="off" />
     </div>
 
 

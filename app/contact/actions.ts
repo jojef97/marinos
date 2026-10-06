@@ -1,8 +1,28 @@
 "use server";
 
 import { Resend } from "resend";
+import { headers } from "next/headers";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+
+const hits = new Map<string, number[]>();
+const WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+const MAX_HITS = 3;
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
+
+  if (recent.length >= MAX_HITS) {
+    hits.set(key, recent);
+    return true;
+  }
+
+  recent.push(now);
+  hits.set(key, recent);
+  return false;
+}
 
 export type FormState = {
     status: "idle" | "success" | "error";
@@ -17,10 +37,11 @@ export async function sendMessage(
     const name = formData.get("name");
     const email = formData.get("email");
     const message = formData.get("message");
-    const honeypot = formData.get("website");
-    if (typeof honeypot === "string" && honeypot.trim() !== "") {
-        return { status: "success", message: "Thanks! Your message was sent." };
-    }
+    const honeypot = formData.get("hp_field");
+   if (typeof honeypot === "string" && honeypot.trim() !== "") {
+    console.warn("honeypot triggered");
+    return { status: "success", message: "Thanks! Your message was sent." };
+}
 
     if (
         typeof name !== "string" ||
@@ -50,6 +71,17 @@ export async function sendMessage(
     if (!to) {
         console.error("CONTACT_TO is not set");
         return { status: "error", message: "Something went wrong. Please try again.", fields };
+    }
+
+    const h = await headers();
+    const ip = h.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+
+    if (isRateLimited(ip)) {
+        return {
+            status: "error",
+            message: "Too many messages. Please try again in a few minutes.",
+            fields,
+        };
     }
 
     const { error } = await resend.emails.send({
