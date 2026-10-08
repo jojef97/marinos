@@ -1,8 +1,8 @@
 .page {
   flex: 1;
   width: 100%;
-  padding: 80px 48px 0px;
-  background-color: #f5f1ea;
+  padding: 80px 0px 0px;
+  background-color: #fffefe;
   color: #1a1a1a;
 }
 
@@ -11,13 +11,13 @@
 .block {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 0px;
   align-items: start;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .block:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0px;;
 }
 
 
@@ -40,15 +40,16 @@
 .text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 24px;
-}
+  justify-content: center;
+  padding: 50px;
+  height:100%;
+  }
 
 .text h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
-  margin: 0;
+  margin: 8px 0px;
 
   text-decoration: underline;
   text-decoration-color: #000;
@@ -57,7 +58,8 @@
 }
 
 .text p {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  padding:20px 0px;
 }
 
 .list {
@@ -67,8 +69,8 @@
 }
 
 .list li {
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+  font-size: 1.4rem;
+  margin-bottom: 2px;
 }
 
 @media (max-width: 768px) {
@@ -78,5 +80,17 @@
 
   .reverse .imageWrap {
     order: 0;
+  }
+
+
+  .text h2{
+    text-underline-offset: 3px;  
+  }
+
+  .text p {
+  line-height: 1.6rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+ 
   }
 }

@@ -1,35 +1,49 @@
 "use client";
 
-
+import { useState } from "react";
 import "./Navbar.css";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; 
+import { usePathname } from "next/navigation";
 
-export default function Navbar(){
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
 
-    const pathname = usePathname();
+export default function Navbar() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-    return(
+  return (
+     <>
+    <nav className="Navbar">
+      <button
+        className="burger"
+        onClick={() => setOpen(!open)}
+        aria-label="Toggle menu"
+        aria-expanded={open}
+      >
+        {open ? "✕" : "☰"}
+      </button>
 
-        <nav className="Navbar">
+      <ul className={open ? "links open" : "links"}>
+        {links.map((l) => (
+          <li key={l.href}>
+            <Link
+              href={l.href}
+              className={pathname === l.href ? "active" : ""}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-           {/* <div className="logo-container">
-           <img src="/logo" alt="Logo" />
-            </div> */}
+    {open && <div className="overlay" onClick={() => setOpen(false)} />}
+  </>
 
-        
-            <ul className="links">
-
-            <li><Link href="/"className={pathname === "/" ? "active" : ""} >Home</Link></li>
-
-            <li><Link href="/services"className={pathname === "/services" ? "active" : ""} >Services</Link></li>
-
-            <li><Link href="/contact"className={pathname === "/contact" ? "active" : ""} >Contact</Link></li>
-
-            </ul>
-        
-        
-        </nav>
-    )
-
+  );
 }

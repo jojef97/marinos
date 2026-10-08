@@ -31,7 +31,7 @@ export default function ContactForm() {
       <input id="email" name="email" type="email" required defaultValue={state.fields?.email}/>
 
       <label htmlFor="message">Message</label>
-      <textarea id="message" name="message" rows={8} required defaultValue={state.fields?.message}/>
+      <textarea id="message" name="message" rows={5} required defaultValue={state.fields?.message}/>
 
       <button type="submit" disabled={isPending}>
         {isPending ? "Sending..." : "Send"}

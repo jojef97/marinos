@@ -8,6 +8,20 @@ import ContactForm from "./ContactForm";
 export default function ContactPage() {
   const [copied, setCopied] = useState<string | null>(null);
 
+
+const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || "+300000000000";
+const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com";
+
+
+  const handlePhoneClick = (phone: string) => {                                     //Mobile cAll
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = `tel:${phone}`;
+  } else {
+    handleCopy(phone);
+  }
+};
+
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(text);
@@ -21,24 +35,26 @@ export default function ContactPage() {
       <div className={styles.contactIcons}>
         <div 
           className={styles.iconBox} 
-          onClick={() => handleCopy("+302101234567")}
-        >
+          onClick={() => handlePhoneClick(phone)}        >
           <Phone size={24} />
-          <span>+30 210 1234567</span>
-          {copied === "+302101234567" ? (
-            <Check size={16} className={styles.copyIcon} />
-          ) : (
-            <Copy size={16} className={styles.copyIcon} />
-          )}
+          <span>{phone}</span>
+          {copied ===  phone ? (
+          <Check size={16} className={styles.copyIcon} />
+        ) : (
+          <span className={styles.copyIcon}>
+            <Copy size={16} className={styles.desktopOnly} />
+            <Phone size={16} className={styles.mobileOnly} />
+          </span>
+        )}
         </div>
 
         <div 
           className={styles.iconBox} 
-          onClick={() => handleCopy("info@karalis.com")}
+          onClick={() => handleCopy(email)}
         >
           <Mail size={24} />
-          <span>info@karalis.com</span>
-          {copied === "info@marinos.com" ? (
+          <span>{email}</span>
+          {copied ===  email ? (
             <Check size={16} className={styles.copyIcon} />
           ) : (
             <Copy size={16} className={styles.copyIcon} />
