@@ -17,4 +17,8 @@ html, body {
   
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 
