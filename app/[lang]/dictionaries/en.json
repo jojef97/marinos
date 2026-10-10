@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "title": "Marinos | Construction & Renovations",
+    "description": "Marinos provides construction, renovation and finishing services. Tell us about your project and request a quote."
+  },
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "toggleMenu": "Toggle menu",
+    "switchLanguage": "Ελληνικά"
+  },
+  "home": {
+    "heroAlt": "Athens",
+    "titleLine1": "Building & Construction",
+    "titleLine2": "Services",
+    "bubbleHeading": "Complete Construction & Renovation Solutions",
+    "bubbleText": "From structural work to the final finishes, our team manages every stage of your project with precision and care.",
+    "bubbleButton": "Request a Quote"
+  },
+  "services": {
+    "categories": [
+      {
+        "id": "renovations",
+        "title": "Renovations",
+        "text": "From small repairs to a full renovation of your space.",
+        "items": ["Full renovation", "Partial renovation", "Minor repairs"]
+      },
+      {
+        "id": "construction",
+        "title": "Construction",
+        "text": "New builds and site preparation from the ground up.",
+        "items": ["Building from the foundations", "Demolition and stripping"]
+      },
+      {
+        "id": "installations",
+        "title": "Installations",
+        "text": "Safe, modern installations for your home or business.",
+        "items": ["Electrical", "Plumbing"]
+      },
+      {
+        "id": "finishing",
+        "title": "Finishing",
+        "text": "The final work that gives a space its look.",
+        "items": ["Drywall", "Tiling", "Painting", "Marble polishing and mosaics"]
+      },
+      {
+        "id": "insulation-outdoor",
+        "title": "Insulation & Outdoor",
+        "text": "Energy savings and care for your outdoor spaces.",
+        "items": ["External wall insulation", "Thermal insulation", "Gardening"]
+      }
+    ]
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "messages": {
+      "generic": "Something went wrong. Please try again.",
+      "emptyFields": "Please fill in all fields.",
+      "invalidEmail": "Please enter a valid email address.",
+      "tooLong": "Your message is too long.",
+      "rateLimited": "Too many messages. Please try again in a few minutes.",
+      "sendFailed": "We couldn't send your message. Please try again later.",
+      "success": "Thanks! Your message was sent."
+    }
+  }
+}

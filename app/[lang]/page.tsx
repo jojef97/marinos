@@ -1,13 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import styles from "./home.module.css";
+import { getDictionary, hasLocale } from "./dictionaries";
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const t = await getDictionary(lang);
+
   return (
     <main className={styles.hero}>
       <Image
         src="/top2.jpg"
-        alt="Athens"
+        alt={t.home.heroAlt}
         fill
         priority
         className={styles.image}
@@ -15,20 +22,17 @@ export default function Home() {
 
       <div className={styles.content}>
         <h1 className={styles.title}>
-          Building & Construction <br /> Services
+          {t.home.titleLine1} <br /> {t.home.titleLine2}
         </h1>
       </div>
 
-    <div className={styles.bubble}>
-  <h2>Complete Construction &amp; Renovation Solutions</h2>
-  <p>
-    From structural work to the final finishes, our team manages every stage
-    of your project with precision and care.
-  </p>
-  <Link href="/contact" className={styles.bubbleButton}>
-    Request a Quote
-  </Link>
-</div>
+      <div className={styles.bubble}>
+        <h2>{t.home.bubbleHeading}</h2>
+        <p>{t.home.bubbleText}</p>
+        <Link href={`/${lang}/contact`} className={styles.bubbleButton}>
+          {t.home.bubbleButton}
+        </Link>
+      </div>
     </main>
   );
 }
