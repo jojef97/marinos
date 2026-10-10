@@ -63,6 +63,23 @@
   cursor: pointer;
 }
 
+.lang-switch {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.lang-switch:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
 @media (max-width: 768px) {
   .Navbar {
     display: flex;
@@ -107,4 +124,12 @@
 .Navbar ul {
   background-color: transparent;
 }
+
+.lang-switch {
+    position: static;
+    transform: none;
+    order: -1;
+    margin-right: 12px;
+    font-size: 1rem;
+  }
 }

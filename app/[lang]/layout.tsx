@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from "next/navigation";
 import "../globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import { getDictionary, hasLocale } from "./dictionaries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,18 +21,24 @@ export const metadata: Metadata = {
   description: "Marinos delivers home renovations, building construction and interior finishing in Athens.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/[lang]">) {
+export default async function RootLayout({
+  children,
+  params,
+}: LayoutProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const t = await getDictionary(lang);
+
   return (
     <html
-      lang="en"
+      lang={lang}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        
-        <Navbar />
+        <Navbar lang={lang} labels={t.navbar} />
         {children}
         <Footer />
-
       </body>
     </html>
   );
