@@ -20,7 +20,8 @@ export default function proxy(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  // FIX: Return NextResponse.next() instead of undefined so the request continues normally
+  if (pathnameHasLocale) return NextResponse.next();
 
   // Redirect if there is no locale
   const locale = getLocale(request);
