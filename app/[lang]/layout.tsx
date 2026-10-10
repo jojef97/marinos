@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import "../globals.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const geistSans = Geist({
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Marinos delivers home renovations, building construction and interior finishing in Athens.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: LayoutProps<"/[lang]">) {
   return (
     <html
       lang="en"
