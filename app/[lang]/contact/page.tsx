@@ -1,66 +1,21 @@
-"use client";
-
-import { useState } from "react";
-import { Phone, Mail, Copy, Check } from "lucide-react";
+import { getDictionary, hasLocale } from "../dictionaries";
 import styles from "./contact.module.css";
 import ContactForm from "./ContactForm";
+import ContactInfo from "./ContactInfo";
 
-export default function ContactPage() {
-  const [copied, setCopied] = useState<string | null>(null);
+interface PageProps {
+  params: Promise<{ lang: string }>;
+}
 
-
-const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || "+300000000000";
-const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com";
-
-
-  const handlePhoneClick = (phone: string) => {                                     //Mobile cAll
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    window.location.href = `tel:${phone}`;
-  } else {
-    handleCopy(phone);
-  }
-};
-
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(text);
-    setTimeout(() => setCopied(null), 2000); // Resets the icon back to Copy after 2 seconds
-  };
+export default async function ContactPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = hasLocale(lang) ? lang : "en";
+  const dict = await getDictionary(locale);
 
   return (
     <main className={styles.page}>
-      <ContactForm />
-
-      <div className={styles.contactIcons}>
-        <div 
-          className={styles.iconBox} 
-          onClick={() => handlePhoneClick(phone)}        >
-          <Phone size={24} />
-          <span>{phone}</span>
-          {copied ===  phone ? (
-          <Check size={16} className={styles.copyIcon} />
-        ) : (
-          <span className={styles.copyIcon}>
-            <Copy size={16} className={styles.desktopOnly} />
-            <Phone size={16} className={styles.mobileOnly} />
-          </span>
-        )}
-        </div>
-
-        <div 
-          className={styles.iconBox} 
-          onClick={() => handleCopy(email)}
-        >
-          <Mail size={24} />
-          <span>{email}</span>
-          {copied ===  email ? (
-            <Check size={16} className={styles.copyIcon} />
-          ) : (
-            <Copy size={16} className={styles.copyIcon} />
-          )}
-        </div>
-      </div>
+      <ContactForm labels={dict.contact.form} />
+      <ContactInfo />
     </main>
   );
 }
