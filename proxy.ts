@@ -6,11 +6,20 @@ const defaultLocale = "en";
 
 function getLocale(request: NextRequest): string {
   const acceptLanguage = request.headers.get("accept-language");
-  if (acceptLanguage?.includes("el")) {
-    return "el";
-  }
-  return defaultLocale;
+  if (!acceptLanguage) return defaultLocale;
+  const parts=acceptLanguage.split(",");
+
+   const languages = parts.map((part) => {
+    const [tag, q] = part.split(";q=");
+    return { lang: tag.split("-")[0], quality: q ? Number(q) : 1 };
+  });
+
+  languages.sort((a, b) => b.quality - a.quality);
+
+  const match = languages.find((l) => locales.includes(l.lang));
+  return match ? match.lang : defaultLocale;
 }
+    
 
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -19,8 +28,6 @@ export default function proxy(request: NextRequest) {
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
-
-  // FIX: Return NextResponse.next() instead of undefined so the request continues normally
   if (pathnameHasLocale) return NextResponse.next();
 
   // Redirect if there is no locale
