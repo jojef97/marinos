@@ -16,10 +16,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Marinos | Construction & Renovations in Athens",
-  description: "Marinos delivers home renovations, building construction and interior finishing in Athens.",
-};
+export async function generateMetadata({
+  params,
+}: LayoutProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+
+  const t = await getDictionary(lang);
+
+  return {
+    title: t.meta.title,
+    description: t.meta.description,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: {
+        en: "/en",
+        el: "/el",
+      },
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
