@@ -7,8 +7,21 @@ import styles from "./contact.module.css";
 export default function ContactInfo() {
   const [copied, setCopied] = useState<string | null>(null);
 
-  const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || "+300000000000";
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@example.com";
+  const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || "";
+  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "";
+
+  if (process.env.NODE_ENV === "development") {
+    if (!phone){
+    throw new Error ("Missing NEXT_PUBLIC_CONTACT_PHONE environment variable.");
+    }
+
+    if (!email){
+      throw new Error ("Missing NEXT_PUBLIC_CONTACT_EMAIL environment variable.");
+      
+    }
+  }
+
+  if (!phone || !email) return null;
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
