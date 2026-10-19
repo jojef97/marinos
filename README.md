@@ -8,6 +8,7 @@ Developed the translation feature on a separate branch and merged it, with Git/G
 
 ## Known limitations
 - Contact emails are sent through Resend in test mode, so they currently only reach the owner's account until the client's domain is verified.
+- **The rate limiter is in-memory.** It allows 3 messages per 10 minutes per IP, but the counters live in each serverless instance's memory, so the limit is per instance and resets on cold starts and redeploys. A shared store such as Redis would be needed for a strict limit.
 
 **Status:** Complete and deployed on Vercel. Awaiting the client's domain and launch.
 **Demo:** https://marinos-phi.vercel.app

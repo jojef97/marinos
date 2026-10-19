@@ -1,0 +1,6 @@
+## Before launch
+
+1. Connect the client's domain on Vercel.
+2. Verify the domain in Resend and change the sender address.
+3. Set `CONTACT_TO` to the client's email.
+4. Move the rate limiter to a shared store.
