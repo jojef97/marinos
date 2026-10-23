@@ -2,27 +2,18 @@
 
 import { Resend } from "resend";
 import { headers } from "next/headers";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 
-const hits = new Map<string, number[]>();
-const WINDOW_MS = 10 * 60 * 1000; // 10 minutes
-const MAX_HITS = 3;
-
-function isRateLimited(key: string) {
-  const now = Date.now();
-  const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
-
-  if (recent.length >= MAX_HITS) {
-    hits.set(key, recent);
-    return true;
-  }
-
-  recent.push(now);
-  hits.set(key, recent);
-  return false;
-}
+const redis = Redis.fromEnv();
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(3, "10 m"), // Max 3 requests per 10 minutes
+  analytics: true,
+});
 
 export type FormState = {
     status: "idle" | "success" | "error";
@@ -76,10 +67,13 @@ export async function sendMessage(
     const h = await headers();
     const ip = h.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
 
-    if (isRateLimited(ip)) {
+
+    // CHECK RATE LIMIT WITH UPSTASH REDIS
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
         return {
             status: "error",
-            message: "Too many messages. Please try again in a few minutes.",
+            message: "Too many messages. Please try again in 10 minutes.",
             fields,
         };
     }
